@@ -8,7 +8,7 @@ Will be built an entire project.
 
 How to add file upload, authentication, authorization and how to deploy your application in different ways to different hosting services.
 
-#In details:
+# In details:
 
 - Brief refreshers on the core technologies (React, Node, Express, MongoDB)
 
@@ -26,4 +26,4 @@ How to add file upload, authentication, authorization and how to deploy your app
 
 - Detailed deployment instructions - including different ways of deploying the application
 
-#By the end, we'll feel comfortable building own MERN stack applications.
+# By the end, we'll feel comfortable building own MERN stack applications.
