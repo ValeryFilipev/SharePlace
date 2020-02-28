@@ -1,74 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 
-import Header from './components/Header/Header';
-import NewProduct from './components/Products/NewProduct';
-import ProductList from './components/Products/ProductList';
-import './App.css';
+import Users from './user/pages/Users';
+import NewPlaces from './places/pages/NewPlace';
 
-function App() {
-  const [loadedProducts, setLoadedProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      const response = await fetch('http://localhost:5000/products');
-
-      const responseData = await response.json();
-
-      setLoadedProducts(responseData.products);
-      setIsLoading(false);
-    };
-
-    fetchProducts();
-  }, []);
-
-  const addProductHandler = async (productName, productPrice) => {
-    try {
-      const newProduct = {
-        title: productName,
-        price: +productPrice // "+" to convert string to number
-      };
-      let hasError = false;
-      const response = await fetch('http://localhost:5000/product', {
-        method: 'POST',
-        body: JSON.stringify(newProduct),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        hasError = true;
-      }
-
-      const responseData = await response.json();
-
-      if (hasError) {
-        throw new Error(responseData.message);
-      }
-
-      setLoadedProducts(prevProducts => {
-        return prevProducts.concat({
-          ...newProduct,
-          id: responseData.product.id
-        });
-      });
-    } catch (error) {
-      alert(error.message || 'Something went wrong!');
-    }
-  };
-
+const App = () => {
   return (
-    <React.Fragment>
-      <Header />
-      <main>
-        <NewProduct onAddProduct={addProductHandler} />
-        {isLoading && <p className="loader">Loading...</p>}
-        {!isLoading && <ProductList items={loadedProducts} />}
-      </main>
-    </React.Fragment>
-  );
-}
+      <Router>
+          <Switch>
+            <Route path="/" exact>
+              <Users />
+            </Route>
+              <Route path="/places/new" exact>
+                  <NewPlaces />
+              </Route>
+            <Redirect to="/" />
+          </Switch>
+      </Router>
+  )
+};
 
 export default App;
