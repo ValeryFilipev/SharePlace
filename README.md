@@ -1,4 +1,4 @@
-# MyPlaces
+# SharePlace
 
 Building fullstack applications (i.e. frontend + backend) with the MERN stack.
 
