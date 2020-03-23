@@ -1,6 +1,6 @@
 import React from "react";
 
-import UsersList from "../components/UsersList";
+import UsersList from "../components/UserList";
 
 const Users = () => {
   const USERS = [

@@ -5,10 +5,9 @@ import MainHeader from "../MainHeader";
 import NavLinks from "../NavLinks";
 import SideDrawer from "../SideDrawer";
 import Backdrop from "../../UI/Backdrop";
-
 import "./index.css";
 
-const MainNavigation = props => {
+const MainNavigation = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const openDrawerHandler = () => {
@@ -28,7 +27,10 @@ const MainNavigation = props => {
         </nav>
       </SideDrawer>
       <MainHeader>
-        <button className="main-navigation__menu-btn" onClick={openDrawerHandler}>
+        <button
+          className="main-navigation__menu-btn"
+          onClick={openDrawerHandler}
+        >
           <span />
           <span />
           <span />
@@ -43,6 +45,5 @@ const MainNavigation = props => {
     </>
   );
 };
-
 
 export default MainNavigation;

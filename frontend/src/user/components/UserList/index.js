@@ -1,6 +1,6 @@
 import React from "react";
 
-import UsersItem from "../UserItem";
+import UserItem from "../UserItem";
 import Card from "../../../shared/components/UI/Card";
 
 import "./index.css";
@@ -19,7 +19,7 @@ const UsersList = props => {
   return (
     <ul className="users-list">
       {props.items.map(user => (
-        <UsersItem
+        <UserItem
           key={user.id}
           id={user.id}
           image={user.image}

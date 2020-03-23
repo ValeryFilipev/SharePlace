@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import "./index.css";
-
 import Avatar from "../../../shared/components/UI/Avatar";
 import Card from "../../../shared/components/UI/Card";
+import "./index.css";
 
-const UsersItem = props => {
+const UserItem = props => {
   return (
     <li className="user-item">
       <Card className="user-item__content">
@@ -19,7 +18,7 @@ const UsersItem = props => {
               {props.name}
             </h2>
             <h3>
-              {props.placeCount} {props.placeCount === 1 ? 'Place' : 'Places'}
+              {props.placeCount} {props.placeCount === 1 ? "Place" : "Places"}
             </h3>
           </div>
         </Link>
@@ -28,4 +27,4 @@ const UsersItem = props => {
   );
 };
 
-export default UsersItem;
+export default UserItem;

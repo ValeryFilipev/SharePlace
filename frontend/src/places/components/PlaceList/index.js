@@ -1,9 +1,8 @@
-import React from 'react';
-
-import "./index.css";
+import React from "react";
 
 import Card from "../../../shared/components/UI/Card";
 import PlaceItem from "../PlaceItem";
+import "./index.css";
 
 const PlaceList = props => {
   if (props.items.length === 0) {
@@ -27,7 +26,7 @@ const PlaceList = props => {
           title={place.title}
           description={place.description}
           address={place.address}
-          creatorId={place.creatorId}
+          creatorId={place.creator}
           coordinates={place.location}
         />
       ))}

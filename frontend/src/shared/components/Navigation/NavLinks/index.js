@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import "./index.css";
 
-const NavLinks = props => {
+const NavLinks = () => {
   return (
     <ul className="nav-links">
       <li>

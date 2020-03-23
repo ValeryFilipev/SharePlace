@@ -1,13 +1,12 @@
 import React from "react";
 
 import Card from "../../../shared/components/UI/Card";
-
 import "./index.css";
 
 const PlaceItem = props => {
   return (
     <li className="place-item">
-      <Card classname="place-item__content">
+      <Card className="place-item__content">
         <div className="place-item__image">
           <img src={props.image} alt={props.title} />
         </div>
