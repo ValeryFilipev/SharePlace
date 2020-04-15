@@ -30,12 +30,6 @@ const Auth = () => {
     false
   );
 
-  const authSubmitHandler = event => {
-    event.preventDefault();
-
-    console.log(formState.inputs);
-  };
-
   const switchModeHandler = () => {
     if (!isLoginMode) {
       setFormData(
@@ -61,12 +55,18 @@ const Auth = () => {
     setIsLoginMode(prevMode => !prevMode);
   };
 
+  const authSubmitHandler = event => {
+    event.preventDefault();
+
+    console.log(formState.inputs);
+  };
+
   return (
     <Card className="authentication">
       <h2>Login required!</h2>
       <hr />
       <form onSubmit={authSubmitHandler}>
-        {isLoginMode && (
+        {!isLoginMode && (
           <Input
             element="input"
             id="name"
