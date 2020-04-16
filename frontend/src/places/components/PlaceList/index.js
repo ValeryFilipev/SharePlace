@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Card from "../../../shared/components/UI/Card";
 import PlaceItem from "../PlaceItem";
@@ -33,6 +34,10 @@ const PlaceList = props => {
       ))}
     </ul>
   );
+};
+
+PlaceList.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default PlaceList;

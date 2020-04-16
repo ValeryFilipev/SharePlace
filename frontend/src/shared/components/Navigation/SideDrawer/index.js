@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+
 import { CSSTransition } from "react-transition-group";
 
 import "./index.css";
@@ -20,6 +22,11 @@ const SideDrawer = props => {
   );
 
   return ReactDOM.createPortal(content, document.getElementById("drawer-hook"));
+};
+
+SideDrawer.propTypes = {
+  show: PropTypes.bool.isRequired,
+  children: PropTypes.element.isRequired
 };
 
 export default SideDrawer;

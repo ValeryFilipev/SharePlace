@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 
 import Card from "../../../shared/components/UI/Card";
 import Button from "../../../shared/components/UI/Form/Button";
@@ -91,6 +92,15 @@ const PlaceItem = props => {
       </li>
     </>
   );
+};
+
+PlaceItem.propTypes = {
+  address: PropTypes.string.isRequired,
+  coordinates: PropTypes.objectOf(PropTypes.number).isRequired,
+  image: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired
 };
 
 export default PlaceItem;
