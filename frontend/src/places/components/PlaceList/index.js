@@ -37,7 +37,15 @@ const PlaceList = props => {
 };
 
 PlaceList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.object)
+  items: PropTypes.arrayOf(PropTypes.exact({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    imageUrl: PropTypes.string,
+    address: PropTypes.string,
+    location: PropTypes.objectOf(PropTypes.number),
+    creator: PropTypes.string
+  }))
 };
 
 export default PlaceList;

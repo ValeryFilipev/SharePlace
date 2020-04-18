@@ -1,4 +1,5 @@
 import React, { useReducer, useEffect } from "react";
+import PropTypes from "prop-types";
 
 import { validate } from "../../../../util/validators";
 
@@ -16,7 +17,7 @@ const inputReducer = (state, action) => {
       return {
         ...state,
         isTouched: true
-      }
+      };
     }
     default:
       return state;
@@ -25,7 +26,7 @@ const inputReducer = (state, action) => {
 
 const Input = props => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: props.initialValue || '',
+    value: props.initialValue || "",
     isTouched: false,
     isValid: props.initialValid || false
   });
@@ -72,14 +73,30 @@ const Input = props => {
     );
 
   return (
-    <div className={`form-control ${!inputState.isValid && inputState.isTouched &&
-      'form-control--invalid'}`}
+    <div
+      className={`form-control ${!inputState.isValid &&
+        inputState.isTouched &&
+        "form-control--invalid"}`}
     >
       <label htmlFor={props.id}>{props.label}</label>
       {element}
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
     </div>
   );
+};
+
+Input.propTypes = {
+  initialValue: PropTypes.string,
+  initialValid: PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  onInput: PropTypes.func.isRequired,
+  validators: PropTypes.array.isRequired,
+  type: PropTypes.string,
+  element: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  rows: PropTypes.number,
+  label: PropTypes.string.isRequired,
+  errorText: PropTypes.string.isRequired
 };
 
 export default Input;

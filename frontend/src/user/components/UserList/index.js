@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import UserItem from "../UserItem";
 import Card from "../../../shared/components/UI/Card";
@@ -29,6 +30,15 @@ const UsersList = props => {
       ))}
     </ul>
   );
+};
+
+UsersList.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.exact({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    image: PropTypes.string,
+    places: PropTypes.number
+  }))
 };
 
 export default UsersList;

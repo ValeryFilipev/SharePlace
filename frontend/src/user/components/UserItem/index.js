@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import Avatar from "../../../shared/components/UI/Avatar";
@@ -14,9 +15,7 @@ const UserItem = props => {
             <Avatar image={props.image} alt={props.name} />
           </div>
           <div className="user-item__info">
-            <h2>
-              {props.name}
-            </h2>
+            <h2>{props.name}</h2>
             <h3>
               {props.placeCount} {props.placeCount === 1 ? "Place" : "Places"}
             </h3>
@@ -25,6 +24,13 @@ const UserItem = props => {
       </Card>
     </li>
   );
+};
+
+UserItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  placeCount: PropTypes.number.isRequired
 };
 
 export default UserItem;
