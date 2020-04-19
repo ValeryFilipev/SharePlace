@@ -5,9 +5,12 @@ import { withNamespaces } from "react-i18next";
 
 import Avatar from "../../../shared/components/UI/Avatar";
 import Card from "../../../shared/components/UI/Card";
+import { generateCorrectText } from "../../../shared/util/declensionNouns";
 import "./index.css";
 
 const UserItem = props => {
+  const places = [props.t("place"), props.t("places"), props.t("Places")];
+
   return (
     <li className="user-item">
       <Card className="user-item__content">
@@ -18,7 +21,9 @@ const UserItem = props => {
           <div className="user-item__info">
             <h2>{props.name}</h2>
             <h3>
-              {props.placeCount} {props.placeCount === 1 ? "Place" : "Places"}
+              {props.placeCount}{" "}
+              {props.placeCount >= 0 &&
+                generateCorrectText(places, props.placeCount)}
             </h3>
           </div>
         </Link>

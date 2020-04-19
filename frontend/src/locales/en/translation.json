@@ -34,5 +34,8 @@
   "Valid password": "Please enter a valid email password, at least 5 characters.",
   "Login": "Login",
   "SignUp": "SignUp",
-  "Switch to": "Switch to"
+  "Switch to": "Switch to",
+  "place": "place",
+  "places": "places",
+  "Places": "Places"
 }
