@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
 
 import UserItem from "../UserItem";
 import Card from "../../../shared/components/UI/Card";
@@ -11,7 +12,7 @@ const UsersList = props => {
     return (
       <div className="center">
         <Card>
-          <h2>No users found.</h2>
+          <h2>{props.t("No users")}</h2>
         </Card>
       </div>
     );
@@ -41,4 +42,4 @@ UsersList.propTypes = {
   }))
 };
 
-export default UsersList;
+export default withNamespaces()(UsersList);

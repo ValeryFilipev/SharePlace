@@ -1,9 +1,11 @@
 import React from "react";
+import { withNamespaces } from "react-i18next";
 import PropTypes from "prop-types";
 
 import Card from "../../../shared/components/UI/Card";
 import PlaceItem from "../PlaceItem";
 import Button from "../../../shared/components/UI/Form/Button";
+
 import "./index.css";
 
 const PlaceList = props => {
@@ -11,8 +13,8 @@ const PlaceList = props => {
     return (
       <div className="place-list center">
         <Card>
-          <h2>No places found. May be create one?</h2>
-          <Button to="/places/new">Share place</Button>
+          <h2>{props.t("No places found")}</h2>
+          <Button to="/places/new">{props.t("Share place")}</Button>
         </Card>
       </div>
     );
@@ -48,4 +50,4 @@ PlaceList.propTypes = {
   }))
 };
 
-export default PlaceList;
+export default withNamespaces()(PlaceList);

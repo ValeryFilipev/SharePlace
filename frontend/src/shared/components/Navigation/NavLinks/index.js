@@ -16,8 +16,10 @@ const NavLinks = ({ t }) => {
 
   return (
     <ul className="nav-links">
-      <button onClick={() => changeLanguage("ru")}>ru</button>
-      <button onClick={() => changeLanguage("en")}>en</button>
+      <li>
+        <button onClick={() => changeLanguage("ru")}>{t("ru")}</button>
+        <button onClick={() => changeLanguage("en")}>{t("en")}</button>
+      </li>
       <li>
         <NavLink to="/" exact>
           {t("All Users")}

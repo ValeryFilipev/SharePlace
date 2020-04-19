@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { withNamespaces } from "react-i18next";
 import PropTypes from "prop-types";
 
 import Card from "../../../shared/components/UI/Card";
@@ -38,7 +39,7 @@ const PlaceItem = props => {
         header={props.address}
         contentClass="place-item__modal-content"
         footerClass="place-item__modal-actions"
-        footer={<Button onClick={closeMapHandler}>Close</Button>}
+        footer={<Button onClick={closeMapHandler}>{props.t("Close")}</Button>}
       >
         <div className="map-container">
           <Map center={props.coordinates} zoom={16} />
@@ -47,23 +48,20 @@ const PlaceItem = props => {
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
-        header="Are you sure?"
+        header={props.t("Are you sure")}
         footerClass="place-item__modal-actions"
         footer={
           <>
             <Button inverse onClick={cancelDeleteHandler}>
-              Cancel
+              {props.t("Cancel")}
             </Button>
             <Button danger onClick={confirmDeleteHandler}>
-              Delete
+              {props.t("Delete")}
             </Button>
           </>
         }
       >
-        <p>
-          Do you want to proceed and delete this place? Please note that it can
-          not be undone thereafter.
-        </p>
+        <p>{props.t("Delete modal body")}</p>
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
@@ -77,14 +75,14 @@ const PlaceItem = props => {
           </div>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>
-              View on Map
+              {props.t("View on Map")}
             </Button>
             {auth.isLoggedIn && (
-              <Button to={`/places/${props.id}`}>Edit</Button>
+              <Button to={`/places/${props.id}`}>{props.t("Edit")}</Button>
             )}
             {auth.isLoggedIn && (
               <Button danger onClick={showDeleteWarningHandler}>
-                Delete
+                {props.t("Delete")}
               </Button>
             )}
           </div>
@@ -103,4 +101,4 @@ PlaceItem.propTypes = {
   id: PropTypes.string.isRequired
 };
 
-export default PlaceItem;
+export default withNamespaces()(PlaceItem);

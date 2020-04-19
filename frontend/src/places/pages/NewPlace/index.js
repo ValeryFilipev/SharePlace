@@ -1,4 +1,5 @@
 import React from "react";
+import { withNamespaces } from "react-i18next";
 
 import Input from "../../../shared/components/UI/Form/Input";
 import Button from "../../../shared/components/UI/Form/Button";
@@ -10,7 +11,7 @@ import { useForm } from "../../../shared/hooks/form-hook";
 
 import "./index.css";
 
-const NewPlace = () => {
+const NewPlace = ({ t }) => {
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -40,32 +41,32 @@ const NewPlace = () => {
         id="title"
         element="input"
         type="text"
-        label="Title"
+        label={t("Title")}
         validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title."
+        errorText={t("Error text title")}
         onInput={inputHandler}
       />
       <Input
         id="description"
         element="textarea"
-        label="Description"
+        label={t("Description")}
         validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid description. (at least 5 characters)."
+        errorText={t("Error text description")}
         onInput={inputHandler}
       />
       <Input
         id="address"
         element="input"
-        label="Address"
+        label={t("Address")}
         validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid address."
+        errorText={t("Error text address")}
         onInput={inputHandler}
       />
       <Button type="submit" disabled={!formState.isValid}>
-        Add Place
+        {t("Add Place")}
       </Button>
     </form>
   );
 };
 
-export default NewPlace;
+export default withNamespaces()(NewPlace);

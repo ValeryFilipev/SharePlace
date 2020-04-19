@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { withNamespaces } from "react-i18next";
 
 import Card from "../../../shared/components/UI/Card";
 import Input from "../../../shared/components/UI/Form/Input";
@@ -14,7 +15,7 @@ import { AuthContext } from "../../../shared/context/auth-context";
 
 import "./index.css";
 
-const Auth = () => {
+const Auth = ({ t }) => {
   const auth = useContext(AuthContext);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -68,7 +69,7 @@ const Auth = () => {
 
   return (
     <Card className="authentication">
-      <h2>Login required!</h2>
+      <h2>{t("Login auth")}</h2>
       <hr />
       <form onSubmit={authSubmitHandler}>
         {!isLoginMode && (
@@ -76,9 +77,9 @@ const Auth = () => {
             element="input"
             id="name"
             type="text"
-            label="Your Name"
+            label={t("Your Name")}
             validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a name."
+            errorText={t("Enter name")}
             onInput={inputHandler}
           />
         )}
@@ -86,29 +87,29 @@ const Auth = () => {
           element="input"
           id="email"
           type="email"
-          label="E-Mail"
+          label={t("E-Mail")}
           validators={[VALIDATOR_EMAIL()]}
-          errorText="Please enter a valid email address."
+          errorText={t("Valid email")}
           onInput={inputHandler}
         />
         <Input
           element="input"
           id="password"
           type="password"
-          label="Password"
+          label={t("Password")}
           validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a valid email password, at least 5 characters."
+          errorText={t("Valid password")}
           onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>
-          {isLoginMode ? "Login" : "SignUp"}
+          {isLoginMode ? t("Login") : t("SignUp")}
         </Button>
       </form>
       <Button inverse onClick={switchModeHandler}>
-        Switch to {isLoginMode ? "SignUp" : "Login"}
+        {t("Switch to")} {isLoginMode ? t("SignUp") : t("Login")}
       </Button>
     </Card>
   );
 };
 
-export default Auth;
+export default withNamespaces()(Auth);

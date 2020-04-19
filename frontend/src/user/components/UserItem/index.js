@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { withNamespaces } from "react-i18next";
 
 import Avatar from "../../../shared/components/UI/Avatar";
 import Card from "../../../shared/components/UI/Card";
@@ -33,4 +34,4 @@ UserItem.propTypes = {
   placeCount: PropTypes.number.isRequired
 };
 
-export default UserItem;
+export default withNamespaces()(UserItem);

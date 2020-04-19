@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { withNamespaces } from "react-i18next";
 
 import {
   VALIDATOR_REQUIRE,
@@ -42,7 +43,7 @@ const DUMMY_PLACES = [
   }
 ];
 
-const UpdatePlace = () => {
+const UpdatePlace = ({ t }) => {
   const [isLoading, setIsLoading] = useState(true);
   const placeId = useParams().placeId;
 
@@ -91,7 +92,7 @@ const UpdatePlace = () => {
     return (
       <div className="center">
         <Card>
-          <h2>Could not find place!</h2>
+          <h2>{t("Not found")}</h2>
         </Card>
       </div>
     );
@@ -100,7 +101,7 @@ const UpdatePlace = () => {
   if (isLoading) {
     return (
       <div className="center">
-        <h2>Loading...</h2>
+        <h2>{t("Loading")}</h2>
       </div>
     );
   }
@@ -111,9 +112,9 @@ const UpdatePlace = () => {
         id="title"
         element="input"
         type="text"
-        label="Title"
+        label={t("Title")}
         validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title."
+        errorText={t("Error text title")}
         onInput={inputHandler}
         initialValue={formState.inputs.title.value}
         initialValid={formState.inputs.title.isValid}
@@ -121,18 +122,18 @@ const UpdatePlace = () => {
       <Input
         id="description"
         element="textarea"
-        label="Description"
+        label={t("Description")}
         validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid description (min. 5 characters)."
+        errorText={t("Error text description")}
         onInput={inputHandler}
         initialValue={formState.inputs.description.value}
         initialValid={formState.inputs.description.isValid}
       />
       <Button type="submit" disabled={!formState.isValid}>
-        UPDATE PLACE
+        {t("Update Place")}
       </Button>
     </form>
   );
 };
 
-export default UpdatePlace;
+export default withNamespaces()(UpdatePlace);
