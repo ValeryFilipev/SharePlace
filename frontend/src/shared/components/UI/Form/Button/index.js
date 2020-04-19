@@ -48,7 +48,7 @@ Button.propTypes = {
   danger: PropTypes.bool,
   children: PropTypes.node.isRequired,
   to: PropTypes.string,
-  exact: PropTypes.any,
+  exact: PropTypes.bool,
   type: PropTypes.string,
   onClick: PropTypes.func,
   disabled: PropTypes.bool
