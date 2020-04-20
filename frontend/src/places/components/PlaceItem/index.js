@@ -2,11 +2,11 @@ import React, { useState, useContext } from "react";
 import { withNamespaces } from "react-i18next";
 import PropTypes from "prop-types";
 
-import Card from "../../../shared/components/UI/Card";
-import Button from "../../../shared/components/UI/Form/Button";
-import Modal from "../../../shared/components/UI/Modal";
-import Map from "../../../shared/components/UI/Map";
-import { AuthContext } from "../../../shared/context/auth-context";
+import Card from "../../../components/UI/Card";
+import Button from "../../../components/UI/Form/Button";
+import Modal from "../../../components/UI/Modal";
+import Map from "../../../components/UI/Map";
+import { AuthContext } from "../../../context/auth-context";
 import "./index.css";
 
 const PlaceItem = props => {

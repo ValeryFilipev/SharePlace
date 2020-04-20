@@ -2,9 +2,9 @@ import React from "react";
 import { withNamespaces } from "react-i18next";
 import PropTypes from "prop-types";
 
-import Card from "../../../shared/components/UI/Card";
+import Card from "../../../components/UI/Card";
 import PlaceItem from "../PlaceItem";
-import Button from "../../../shared/components/UI/Form/Button";
+import Button from "../../../components/UI/Form/Button";
 
 import "./index.css";
 

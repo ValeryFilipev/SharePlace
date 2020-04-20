@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withNamespaces } from "react-i18next";
 
 import UserItem from "../UserItem";
-import Card from "../../../shared/components/UI/Card";
+import Card from "../../../components/UI/Card";
 
 import "./index.css";
 

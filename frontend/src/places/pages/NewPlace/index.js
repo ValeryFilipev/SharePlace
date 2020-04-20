@@ -1,13 +1,13 @@
 import React from "react";
 import { withNamespaces } from "react-i18next";
 
-import Input from "../../../shared/components/UI/Form/Input";
-import Button from "../../../shared/components/UI/Form/Button";
+import Input from "../../../components/UI/Form/Input";
+import Button from "../../../components/UI/Form/Button";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
-} from "../../../shared/util/validators";
-import { useForm } from "../../../shared/hooks/form-hook";
+} from "../../../util/validators";
+import { useForm } from "../../../hooks/form-hook";
 
 import "./index.css";
 

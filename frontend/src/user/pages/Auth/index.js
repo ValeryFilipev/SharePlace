@@ -1,17 +1,17 @@
 import React, { useState, useContext } from "react";
 import { withNamespaces } from "react-i18next";
 
-import Card from "../../../shared/components/UI/Card";
-import Input from "../../../shared/components/UI/Form/Input";
-import Button from "../../../shared/components/UI/Form/Button";
+import Card from "../../../components/UI/Card";
+import Input from "../../../components/UI/Form/Input";
+import Button from "../../../components/UI/Form/Button";
 
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
-} from "../../../shared/util/validators";
-import { useForm } from "../../../shared/hooks/form-hook";
-import { AuthContext } from "../../../shared/context/auth-context";
+} from "../../../util/validators";
+import { useForm } from "../../../hooks/form-hook";
+import { AuthContext } from "../../../context/auth-context";
 
 import "./index.css";
 

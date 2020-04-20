@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import i18n from "../../../../i18n";
+import i18n from "../../../i18n";
 import { withNamespaces } from "react-i18next";
 import { NavLink } from "react-router-dom";
 

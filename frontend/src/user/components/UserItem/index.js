@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { withNamespaces } from "react-i18next";
 
-import Avatar from "../../../shared/components/UI/Avatar";
-import Card from "../../../shared/components/UI/Card";
-import { generateCorrectText } from "../../../shared/util/declensionNouns";
+import Avatar from "../../../components/UI/Avatar";
+import Card from "../../../components/UI/Card";
+import { generateCorrectText } from "../../../util/declensionNouns";
 import "./index.css";
 
 const UserItem = props => {

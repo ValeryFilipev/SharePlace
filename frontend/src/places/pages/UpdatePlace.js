@@ -5,14 +5,14 @@ import { withNamespaces } from "react-i18next";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
-} from "../../shared/util/validators";
-import { useForm } from "../../shared/hooks/form-hook";
+} from "../../util/validators";
+import { useForm } from "../../hooks/form-hook";
 
 import "./NewPlace/index.css";
 
-import Input from "../../shared/components/UI/Form/Input";
-import Button from "../../shared/components/UI/Form/Button";
-import Card from "../../shared/components/UI/Card";
+import Input from "../../components/UI/Form/Input";
+import Button from "../../components/UI/Form/Button";
+import Card from "../../components/UI/Card";
 
 const DUMMY_PLACES = [
   {
