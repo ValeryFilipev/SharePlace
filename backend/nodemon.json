@@ -1,0 +1,7 @@
+{
+  "env": {
+    "MONGO_USER": "valery",
+    "MONGO_PASSWORD": "pTUu9NhhK7CyTqGB",
+    "MONGO_DB": "places-react-dev"
+  }
+}
