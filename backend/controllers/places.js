@@ -34,6 +34,7 @@ const getPlaceById = async (req, res, next) => {
 const getPlacesByUserId = async (req, res, next) => {
   const userId = req.params.uid;
 
+  //let places - alternative way
   let userWithPlaces;
   try {
     userWithPlaces = await User.findById(userId).populate("places");
@@ -51,7 +52,11 @@ const getPlacesByUserId = async (req, res, next) => {
     );
   }
 
-  res.json({ places: userWithPlaces.places.map(place => place.toObject({ getters: true })) });
+  res.json({
+    places: userWithPlaces.places.map(place =>
+      place.toObject({ getters: true })
+    )
+  });
 };
 
 const createPlace = async (req, res, next) => {
