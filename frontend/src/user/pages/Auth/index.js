@@ -13,6 +13,7 @@ import {
 } from "../../../util/validators";
 import { useForm } from "../../../hooks/form-hook";
 import { AuthContext } from "../../../context/auth-context";
+import axios from "../../../api/axios";
 
 import "./index.css";
 
@@ -60,10 +61,21 @@ const Auth = ({ t }) => {
     setIsLoginMode(prevMode => !prevMode);
   };
 
-  const authSubmitHandler = event => {
+  const authSubmitHandler = async event => {
     event.preventDefault();
 
-    console.log(formState.inputs);
+    if (!isLoginMode) {
+      try {
+        const response = await axios.post("/users/signup", {
+          name: formState.inputs.name.value,
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value
+        });
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
     auth.login();
   };
