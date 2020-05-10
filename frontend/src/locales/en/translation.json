@@ -31,11 +31,14 @@
   "E-Mail": "E-Mail",
   "Valid email": "Please enter a valid email address.",
   "Password": "Password",
-  "Valid password": "Please enter a valid email password, at least 5 characters.",
+  "Valid password": "Please enter a valid email password, at least 6 characters.",
   "Login": "Login",
   "SignUp": "SignUp",
   "Switch to": "Switch to",
   "place": "place",
   "places": "places",
-  "Places": "Places"
+  "Places": "Places",
+  "Error message": "Something went wrong, please try again!",
+  "Okay": "Okay",
+  "Error modal header": "An error occurred!"
 }

@@ -5,6 +5,8 @@ import { withNamespaces } from "react-i18next";
 import Card from "../../../components/UI/Card";
 import Input from "../../../components/UI/Form/Input";
 import Button from "../../../components/UI/Form/Button";
+import Spinner from "../../../components/UI/Spinner";
+import ErrorModal from "../../../components/UI/Error";
 
 import {
   VALIDATOR_EMAIL,
@@ -21,6 +23,8 @@ const Auth = ({ t }) => {
   const auth = useContext(AuthContext);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, serError] = useState(undefined);
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -66,62 +70,73 @@ const Auth = ({ t }) => {
 
     if (!isLoginMode) {
       try {
+        setIsLoading(true);
         const response = await axios.post("/users/signup", {
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
         });
         console.log(response);
+        setIsLoading(false);
+        auth.login();
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
+        serError(err.message || t("Error message"));
       }
     }
+  };
 
-    auth.login();
+  const errorHandler = () => {
+    serError(null);
   };
 
   return (
-    <Card className="authentication">
-      <h2>{t("Login auth")}</h2>
-      <hr />
-      <form onSubmit={authSubmitHandler}>
-        {!isLoginMode && (
+    <>
+      <ErrorModal error={error} onClear={errorHandler} />
+      <Card className="authentication">
+        {isLoading && <Spinner asOverlay />}
+        <h2>{t("Login auth")}</h2>
+        <hr />
+        <form onSubmit={authSubmitHandler}>
+          {!isLoginMode && (
+            <Input
+              element="input"
+              id="name"
+              type="text"
+              label={t("Your Name")}
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText={t("Enter name")}
+              onInput={inputHandler}
+            />
+          )}
           <Input
             element="input"
-            id="name"
-            type="text"
-            label={t("Your Name")}
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText={t("Enter name")}
+            id="email"
+            type="email"
+            label={t("E-Mail")}
+            validators={[VALIDATOR_EMAIL()]}
+            errorText={t("Valid email")}
             onInput={inputHandler}
           />
-        )}
-        <Input
-          element="input"
-          id="email"
-          type="email"
-          label={t("E-Mail")}
-          validators={[VALIDATOR_EMAIL()]}
-          errorText={t("Valid email")}
-          onInput={inputHandler}
-        />
-        <Input
-          element="input"
-          id="password"
-          type="password"
-          label={t("Password")}
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText={t("Valid password")}
-          onInput={inputHandler}
-        />
-        <Button type="submit" disabled={!formState.isValid}>
-          {isLoginMode ? t("Login") : t("SignUp")}
+          <Input
+            element="input"
+            id="password"
+            type="password"
+            label={t("Password")}
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            errorText={t("Valid password")}
+            onInput={inputHandler}
+          />
+          <Button type="submit" disabled={!formState.isValid}>
+            {isLoginMode ? t("Login") : t("SignUp")}
+          </Button>
+        </form>
+        <Button inverse onClick={switchModeHandler}>
+          {t("Switch to")} {isLoginMode ? t("SignUp") : t("Login")}
         </Button>
-      </form>
-      <Button inverse onClick={switchModeHandler}>
-        {t("Switch to")} {isLoginMode ? t("SignUp") : t("Login")}
-      </Button>
-    </Card>
+      </Card>
+    </>
   );
 };
 

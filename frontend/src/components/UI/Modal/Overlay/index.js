@@ -37,7 +37,7 @@ ModalOverlay.propTypes = {
   onSubmit: PropTypes.func,
   contentClass: PropTypes.string,
   children: PropTypes.element.isRequired,
-  footerClass: PropTypes.string.isRequired,
+  footerClass: PropTypes.string,
   footer: PropTypes.object.isRequired
 };
 
