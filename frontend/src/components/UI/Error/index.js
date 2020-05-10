@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withNamespaces } from "react-i18next";
 
 import Modal from "../Modal";
 import Button from "../Form/Button";
@@ -8,9 +9,9 @@ const ErrorModal = props => {
   return (
     <Modal
       onCancel={props.onClear}
-      header="An error occurred!"
+      header={props.t("Error modal header")}
       show={!!props.error}
-      footer={<Button onClick={props.onClear}>Okay</Button>}
+      footer={<Button onClick={props.onClear}>{props.t("Okay")}</Button>}
     >
       <p>{props.error}</p>
     </Modal>
@@ -22,4 +23,4 @@ ErrorModal.propTypes = {
   error: PropTypes.any
 };
 
-export default ErrorModal;
+export default withNamespaces()(ErrorModal);
