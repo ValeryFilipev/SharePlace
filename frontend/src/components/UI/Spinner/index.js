@@ -12,7 +12,7 @@ const Spinner = props => {
 };
 
 Spinner.propTypes = {
-  asOverlay: PropTypes.bool.isRequired
+  asOverlay: PropTypes.bool
 };
 
 export default Spinner;

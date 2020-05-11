@@ -27,7 +27,7 @@ const UsersList = props => {
           id={user.id}
           image={user.image}
           name={user.name}
-          placeCount={user.places}
+          placeCount={user.places.length}
         />
       ))}
     </ul>
@@ -37,9 +37,12 @@ const UsersList = props => {
 UsersList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.exact({
     id: PropTypes.string,
+    _id: PropTypes.string,
+    __v: PropTypes.number,
+    email: PropTypes.string,
     name: PropTypes.string,
     image: PropTypes.string,
-    places: PropTypes.number
+    places: PropTypes.array
   }))
 };
 
