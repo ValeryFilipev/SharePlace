@@ -16,10 +16,14 @@ import {
 import { useForm } from "../../../hooks/form-hook";
 import { AuthContext } from "../../../context/auth-context";
 import axios from "../../../api/axios";
+import Cancellation from "axios";
 
 import "./index.css";
 
 const Auth = ({ t }) => {
+  const CancelToken = Cancellation.CancelToken;
+  const source = CancelToken.source();
+
   const auth = useContext(AuthContext);
 
   const [isLoginMode, setIsLoginMode] = useState(true);
@@ -75,12 +79,15 @@ const Auth = ({ t }) => {
         await axios.post("/users/login", {
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
+        }, {
+          cancelToken: source.token
         });
         setIsLoading(false);
         auth.login();
       } catch (err) {
         setIsLoading(false);
         serError(err.message || t("Error message"));
+        source.cancel("Operation canceled by the user.");
       }
     } else {
       try {
@@ -88,12 +95,15 @@ const Auth = ({ t }) => {
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
+        }, {
+          cancelToken: source.token
         });
         setIsLoading(false);
         auth.login();
       } catch (err) {
         setIsLoading(false);
         serError(err.message || t("Error message"));
+        source.cancel("Operation canceled by the user.");
       }
     }
   };
