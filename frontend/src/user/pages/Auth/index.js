@@ -68,19 +68,30 @@ const Auth = ({ t }) => {
   const authSubmitHandler = async event => {
     event.preventDefault();
 
-    if (!isLoginMode) {
+    setIsLoading(true);
+
+    if (isLoginMode) {
       try {
-        setIsLoading(true);
-        const response = await axios.post("/users/signup", {
+        await axios.post("/users/login", {
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value
+        });
+        setIsLoading(false);
+        auth.login();
+      } catch (err) {
+        setIsLoading(false);
+        serError(err.message || t("Error message"));
+      }
+    } else {
+      try {
+        await axios.post("/users/signup", {
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
         });
-        console.log(response);
         setIsLoading(false);
         auth.login();
       } catch (err) {
-        console.log(err);
         setIsLoading(false);
         serError(err.message || t("Error message"));
       }
