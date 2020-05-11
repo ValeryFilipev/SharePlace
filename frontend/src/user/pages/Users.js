@@ -27,11 +27,13 @@ const Users = () => {
       } catch (err) {
         setError(err.message);
         source.cancel("Operation canceled by the user.");
+        throw err;
       }
       setIsLoading(false);
     };
     sendRequest();
-  }, [source]);
+    // eslint-disable-next-line
+  }, []);
 
   const errorHandler = () => {
     setError(null);

@@ -28,7 +28,7 @@ const Auth = ({ t }) => {
 
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, serError] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -76,22 +76,23 @@ const Auth = ({ t }) => {
 
     if (isLoginMode) {
       try {
-        await axios.post("/users/login", {
+        const response = await axios.post("/users/login", {
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
         }, {
           cancelToken: source.token
         });
         setIsLoading(false);
-        auth.login();
+        auth.login(response.data.user.id);
       } catch (err) {
+        setError(err.message || t("Error message"));
         setIsLoading(false);
-        serError(err.message || t("Error message"));
         source.cancel("Operation canceled by the user.");
+        throw err;
       }
     } else {
       try {
-        await axios.post("/users/signup", {
+        const response = await axios.post("/users/signup", {
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
@@ -99,17 +100,18 @@ const Auth = ({ t }) => {
           cancelToken: source.token
         });
         setIsLoading(false);
-        auth.login();
+        auth.login(response.data.user.id);
       } catch (err) {
         setIsLoading(false);
-        serError(err.message || t("Error message"));
+        setError(err.message || t("Error message"));
         source.cancel("Operation canceled by the user.");
+        throw err;
       }
     }
   };
 
   const errorHandler = () => {
-    serError(null);
+    setError(null);
   };
 
   return (
