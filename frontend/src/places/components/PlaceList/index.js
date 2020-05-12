@@ -42,12 +42,14 @@ const PlaceList = props => {
 PlaceList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.exact({
     id: PropTypes.string,
+    _id: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
-    imageUrl: PropTypes.string,
+    image: PropTypes.string,
     address: PropTypes.string,
     location: PropTypes.objectOf(PropTypes.number),
-    creator: PropTypes.string
+    creator: PropTypes.string,
+    __v: PropTypes.number
   }))
 };
 
