@@ -1,42 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "../../api/axios";
+import Cancellation from "axios";
 
 import PlaceList from "../components/PlaceList";
-
-const DUMMY_PLACES = [
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "One of the most famous sky scrapers in the world!",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584
-    },
-    creator: "u1"
-  },
-  {
-    id: "p2",
-    title: "Empire State Building",
-    description: "One of the most famous sky scrapers in the world!",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584
-    },
-    creator: "u2"
-  }
-];
+import ErrorModal from "../../components/UI/Error";
+import Spinner from "../../components/UI/Spinner";
 
 const UserPlaces = () => {
-  const userId = useParams().userId;
-  const loadedPlaces = DUMMY_PLACES.filter(place => place.creator === userId);
+  const CancelToken = Cancellation.CancelToken;
+  const source = CancelToken.source();
 
-  return <PlaceList items={loadedPlaces} />;
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+  const [loadedPlaces, setLoadedPlaces] = useState(undefined);
+
+  const userId = useParams().userId;
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      setIsLoading(true);
+
+      try {
+        const response = await axios.get(`/places/user/${userId}`, {
+          cancelToken: source.token
+        });
+
+        setLoadedPlaces(response.data.places);
+      } catch (err) {
+        setError(err.message);
+        source.cancel("Operation canceled by the user.");
+        throw err;
+      }
+      setIsLoading(false);
+    };
+    fetchPlaces();
+    // eslint-disable-next-line
+  }, [userId]);
+
+  const errorHandler = () => {
+    setError(null);
+  };
+
+  return (
+    <>
+      <ErrorModal error={error} onClear={errorHandler} />
+      {isLoading && (
+        <div className="center">
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+    </>
+  );
 };
 
 export default UserPlaces;
