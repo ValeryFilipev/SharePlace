@@ -9,7 +9,7 @@ export const SET_DATA = "SET_DATA";
 
 // Client routes
 export const ROOT = "/";
-export const MY_PLACES = "/u1/places";
+export const MY_PLACES = "/places";
 export const ADD_PLACE = "/places/new";
 export const AUTH = "/auth";
 export const PLACES = "/places/";
