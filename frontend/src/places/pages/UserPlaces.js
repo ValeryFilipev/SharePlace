@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../../api/axios";
+import { GET_PLACES_USER } from "../../api/routes";
 import Cancellation from "axios";
 
 import PlaceList from "../components/PlaceList";
@@ -22,7 +23,7 @@ const UserPlaces = () => {
       setIsLoading(true);
 
       try {
-        const response = await axios.get(`/places/user/${userId}`, {
+        const response = await axios.get(GET_PLACES_USER + userId, {
           cancelToken: source.token
         });
 

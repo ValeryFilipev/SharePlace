@@ -1,5 +1,6 @@
 // for fetch() API
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from "react";
+import { GET } from "../api/routes";
 
 export const useHttpClient = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -8,7 +9,7 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequest = useCallback(
-    async (url, method = 'GET', body = null, headers = {}) => {
+    async (url, method = GET, body = null, headers = {}) => {
       setIsLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);

@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Card from "../../../components/UI/Card";
 import PlaceItem from "../PlaceItem";
 import Button from "../../../components/UI/Form/Button";
+import { ADD_PLACE } from "../../../api/routes";
 
 import "./index.css";
 
@@ -15,7 +16,7 @@ const PlaceList = props => {
       <div className="place-list center">
         <Card>
           <h2>{props.t("No places found")}</h2>
-          <Button to="/places/new">{props.t("Share place")}</Button>
+          <Button to={ADD_PLACE}>{props.t("Share place")}</Button>
         </Card>
       </div>
     );

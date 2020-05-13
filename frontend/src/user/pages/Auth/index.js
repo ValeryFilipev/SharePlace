@@ -13,6 +13,7 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
 } from "../../../util/validators";
+import { POST_LOG_IN, POST_SIGN_UP } from "../../../api/routes";
 import { useForm } from "../../../hooks/form-hook";
 import { AuthContext } from "../../../context/auth-context";
 import axios from "../../../api/axios";
@@ -76,7 +77,7 @@ const Auth = ({ t }) => {
 
     if (isLoginMode) {
       try {
-        const response = await axios.post("/users/login", {
+        const response = await axios.post(POST_LOG_IN, {
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
         }, {
@@ -92,7 +93,7 @@ const Auth = ({ t }) => {
       }
     } else {
       try {
-        const response = await axios.post("/users/signup", {
+        const response = await axios.post(POST_SIGN_UP, {
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value

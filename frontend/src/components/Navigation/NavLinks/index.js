@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import i18n from "../../../i18n";
 import { withNamespaces } from "react-i18next";
 import { NavLink } from "react-router-dom";
+import { ROOT, MY_PLACES, ADD_PLACE, AUTH } from "../../../api/routes";
 
 import { AuthContext } from "../../../context/auth-context";
 
@@ -22,23 +23,23 @@ const NavLinks = ({ t }) => {
         <button onClick={() => changeLanguage("en")}>{t("en")}</button>
       </li>
       <li>
-        <NavLink to="/" exact>
+        <NavLink to={ROOT} exact>
           {t("All Users")}
         </NavLink>
       </li>
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/u1/places">{t("My Places")}</NavLink>
+          <NavLink to={MY_PLACES}>{t("My Places")}</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/places/new">{t("Add Place")}</NavLink>
+          <NavLink to={ADD_PLACE}>{t("Add Place")}</NavLink>
         </li>
       )}
       {!auth.isLoggedIn && (
         <li>
-          <NavLink to="/auth">{t("Authentication")}</NavLink>
+          <NavLink to={AUTH}>{t("Authentication")}</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (

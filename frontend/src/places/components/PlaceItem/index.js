@@ -8,6 +8,7 @@ import Button from "../../../components/UI/Form/Button";
 import Modal from "../../../components/UI/Modal";
 import Map from "../../../components/UI/Map";
 import { AuthContext } from "../../../context/auth-context";
+import { PLACES } from "../../../api/routes";
 import "./index.css";
 
 const PlaceItem = props => {
@@ -79,7 +80,7 @@ const PlaceItem = props => {
               {props.t("View on Map")}
             </Button>
             {auth.isLoggedIn && (
-              <Button to={`/places/${props.id}`}>{props.t("Edit")}</Button>
+              <Button to={PLACES + props.id}>{props.t("Edit")}</Button>
             )}
             {auth.isLoggedIn && (
               <Button danger onClick={showDeleteWarningHandler}>

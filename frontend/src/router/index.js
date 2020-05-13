@@ -15,7 +15,7 @@ import Auth from "../user/pages/Auth";
 import MainNavigation from "../components/Navigation/MainNavigation";
 import { AuthContext } from "../context/auth-context";
 
-const Routes = () => {
+const AppRouter = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(false);
 
@@ -75,4 +75,4 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export default AppRouter;

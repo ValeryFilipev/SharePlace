@@ -14,6 +14,7 @@ import {
 import { useForm } from "../../../hooks/form-hook";
 import { AuthContext } from "../../../context/auth-context";
 import axios from "../../../api/axios";
+import { ROOT, POST_PLACES } from "../../../api/routes";
 import Cancellation from "axios";
 
 import "./index.css";
@@ -52,7 +53,7 @@ const NewPlace = ({ t }) => {
     setIsLoading(true);
 
     try {
-      await axios.post("/places", {
+      await axios.post(POST_PLACES, {
         title: formState.inputs.title.value,
         description: formState.inputs.description.value,
         address: formState.inputs.address.value,
@@ -61,7 +62,7 @@ const NewPlace = ({ t }) => {
         cancelToken: source.token
       });
       setIsLoading(false);
-      history.push("/");
+      history.push(ROOT);
     } catch (err) {
       setError(err.message || t("Error message"));
       setIsLoading(false);

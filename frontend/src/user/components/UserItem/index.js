@@ -2,6 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { ROOT, PLACES } from "../../../api/routes";
 import { withNamespaces } from "react-i18next";
 
 import Avatar from "../../../components/UI/Avatar";
@@ -15,7 +16,7 @@ const UserItem = props => {
   return (
     <li className="user-item">
       <Card className="user-item__content">
-        <Link to={`/${props.id}/places`}>
+        <Link to={ROOT + props.id + PLACES}>
           <div className="user-item__image">
             <Avatar image={props.image} alt={props.name} />
           </div>

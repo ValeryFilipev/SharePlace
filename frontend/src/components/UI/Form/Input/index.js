@@ -3,18 +3,19 @@ import React, { useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { validate } from "../../../../util/validators";
+import { CHANGE, TOUCH } from "../../../../api/routes";
 
 import "./index.css";
 
 const inputReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE":
+    case CHANGE:
       return {
         ...state,
         value: action.val,
         isValid: validate(action.val, action.validators)
       };
-    case "TOUCH": {
+    case TOUCH: {
       return {
         ...state,
         isTouched: true
@@ -41,7 +42,7 @@ const Input = props => {
 
   const changeHandler = event => {
     dispatch({
-      type: "CHANGE",
+      type: CHANGE,
       val: event.target.value,
       validators: props.validators
     });
@@ -49,7 +50,7 @@ const Input = props => {
 
   const touchHandler = () => {
     dispatch({
-      type: "TOUCH"
+      type: TOUCH
     });
   };
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import Cancellation from "axios";
+import { GET_USERS } from "../../api/routes";
 
 import UsersList from "../components/UserList";
 import ErrorModal from "../../components/UI/Error";
@@ -19,7 +20,7 @@ const Users = () => {
       setIsLoading(true);
 
       try {
-        const response = await axios.get("/users", {
+        const response = await axios.get(GET_USERS, {
           cancelToken: source.token
         });
 

@@ -1,9 +1,9 @@
 import React from "react";
 
-import Routes from "./routes";
+import AppRouter from "./router";
 
 const App = () => (
-  <Routes />
+  <AppRouter />
 );
 
 export default App;
