@@ -22,9 +22,15 @@ export const useHttpClient = () => {
           signal: httpAbortCtrl.signal
         });
 
+        const responseData = await response.json();
+
         activeHttpRequests.current = activeHttpRequests.current.filter(
           reqCtrl => reqCtrl !== httpAbortCtrl
         );
+
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
 
         setIsLoading(false);
         return response;
@@ -43,6 +49,7 @@ export const useHttpClient = () => {
 
   useEffect(() => {
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       activeHttpRequests.current.forEach(abortCtrl => abortCtrl.abort());
     };
   }, []);
