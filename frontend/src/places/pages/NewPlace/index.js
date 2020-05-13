@@ -23,6 +23,7 @@ const NewPlace = ({ t }) => {
   const CancelToken = Cancellation.CancelToken;
   const source = CancelToken.source();
   const auth = useContext(AuthContext);
+  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
@@ -44,8 +45,6 @@ const NewPlace = ({ t }) => {
     },
     false
   );
-
-  const history = useHistory();
 
   const placeSubmitHandler = async event => {
     event.preventDefault();

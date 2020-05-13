@@ -1,14 +1,15 @@
 //test!!!
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { withNamespaces } from "react-i18next";
 
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
 } from "../../util/validators";
-import { PLACES } from "../../api/routes";
+import { PLACES, PATCH_PLACE, ROOT } from "../../api/routes";
 import { useForm } from "../../hooks/form-hook";
+import { AuthContext } from "../../context/auth-context";
 import axios from "../../api/axios";
 import Cancellation from "axios";
 
@@ -24,6 +25,8 @@ const UpdatePlace = ({ t }) => {
   const placeId = useParams().placeId;
   const CancelToken = Cancellation.CancelToken;
   const source = CancelToken.source();
+  const auth = useContext(AuthContext);
+  const history = useHistory();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
@@ -78,10 +81,26 @@ const UpdatePlace = ({ t }) => {
     // eslint-disable-next-line
   }, [placeId, setFormData]);
 
-  const placeUpdateSubmitHandler = event => {
+  const placeUpdateSubmitHandler = async event => {
     event.preventDefault();
 
-    console.log(formState.inputs);
+    setIsLoading(true);
+
+    try {
+      await axios.patch(PATCH_PLACE + placeId, {
+        title: formState.inputs.title.value,
+        description: formState.inputs.description.value
+      }, {
+        cancelToken: source.token
+      });
+      setIsLoading(false);
+      history.push(ROOT + auth.userId + PLACES);
+    } catch (err) {
+      setError(err.message || t("Error message"));
+      setIsLoading(false);
+      source.cancel("Operation canceled by the user.");
+      throw err;
+    }
   };
 
   if (isLoading) {
