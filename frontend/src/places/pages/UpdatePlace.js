@@ -7,46 +7,27 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
 } from "../../util/validators";
+import { PLACES } from "../../api/routes";
 import { useForm } from "../../hooks/form-hook";
+import axios from "../../api/axios";
+import Cancellation from "axios";
 
 import "./NewPlace/index.css";
 
 import Input from "../../components/UI/Form/Input";
 import Button from "../../components/UI/Form/Button";
 import Card from "../../components/UI/Card";
-
-const DUMMY_PLACES = [
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "One of the most famous sky scrapers in the world!",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584
-    },
-    creator: "u1"
-  },
-  {
-    id: "p2",
-    title: "Empire State Building",
-    description: "One of the most famous sky scrapers in the world!",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878584
-    },
-    creator: "u2"
-  }
-];
+import Spinner from "../../components/UI/Spinner";
+import ErrorModal from "../../components/UI/Error";
 
 const UpdatePlace = ({ t }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const placeId = useParams().placeId;
+  const CancelToken = Cancellation.CancelToken;
+  const source = CancelToken.source();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+  const [loadedPlace, setLoadedPlace] = useState(undefined);
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -62,26 +43,40 @@ const UpdatePlace = ({ t }) => {
     false
   );
 
-  const identifiedPlace = DUMMY_PLACES.find(p => p.id === placeId);
-
   useEffect(() => {
-    if (identifiedPlace) {
-      setFormData(
-        {
-          title: {
-            value: identifiedPlace.title,
-            isValid: true
+    const fetchPlace = async () => {
+      setIsLoading(true);
+
+      try {
+        const response = await axios.get(PLACES + placeId, {
+          cancelToken: source.token
+        });
+
+        setLoadedPlace(response.data.place);
+
+        setFormData(
+          {
+            title: {
+              value: response.data.place.title,
+              isValid: true
+            },
+            description: {
+              value: response.data.place.description,
+              isValid: true
+            }
           },
-          description: {
-            value: identifiedPlace.description,
-            isValid: true
-          }
-        },
-        true
-      );
-    }
-    setIsLoading(false);
-  }, [setFormData, identifiedPlace]);
+          true
+        );
+      } catch (err) {
+        setError(err.message);
+        source.cancel("Operation canceled by the user.");
+        throw err;
+      }
+      setIsLoading(false);
+    };
+    fetchPlace();
+    // eslint-disable-next-line
+  }, [placeId, setFormData]);
 
   const placeUpdateSubmitHandler = event => {
     event.preventDefault();
@@ -89,7 +84,15 @@ const UpdatePlace = ({ t }) => {
     console.log(formState.inputs);
   };
 
-  if (!identifiedPlace) {
+  if (isLoading) {
+    return (
+      <div className="center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!loadedPlace && !error) {
     return (
       <div className="center">
         <Card>
@@ -99,41 +102,40 @@ const UpdatePlace = ({ t }) => {
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="center">
-        <h2>{t("Loading")}</h2>
-      </div>
-    );
-  }
+  const errorHandler = () => {
+    setError(null);
+  };
 
   return (
-    <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
-      <Input
-        id="title"
-        element="input"
-        type="text"
-        label={t("Title")}
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText={t("Error text title")}
-        onInput={inputHandler}
-        initialValue={formState.inputs.title.value}
-        initialValid={formState.inputs.title.isValid}
-      />
-      <Input
-        id="description"
-        element="textarea"
-        label={t("Description")}
-        validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText={t("Error text description")}
-        onInput={inputHandler}
-        initialValue={formState.inputs.description.value}
-        initialValid={formState.inputs.description.isValid}
-      />
-      <Button type="submit" disabled={!formState.isValid}>
-        {t("Update Place")}
-      </Button>
-    </form>
+    <>
+      <ErrorModal error={error} onClear={errorHandler} />
+      {!isLoading && loadedPlace && <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
+        <Input
+          id="title"
+          element="input"
+          type="text"
+          label={t("Title")}
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText={t("Error text title")}
+          onInput={inputHandler}
+          initialValue={loadedPlace.title}
+          initialValid={true}
+        />
+        <Input
+          id="description"
+          element="textarea"
+          label={t("Description")}
+          validators={[VALIDATOR_MINLENGTH(5)]}
+          errorText={t("Error text description")}
+          onInput={inputHandler}
+          initialValue={loadedPlace.description}
+          initialValid={true}
+        />
+        <Button type="submit" disabled={!formState.isValid}>
+          {t("Update Place")}
+        </Button>
+      </form>}
+    </>
   );
 };
 
