@@ -7,13 +7,23 @@ import Card from "../../../components/UI/Card";
 import Button from "../../../components/UI/Form/Button";
 import Modal from "../../../components/UI/Modal";
 import Map from "../../../components/UI/Map";
+import Spinner from "../../../components/UI/Spinner";
+import ErrorModal from "../../../components/UI/Error";
+
 import { AuthContext } from "../../../context/auth-context";
-import { PLACES } from "../../../api/routes";
+import { PLACES, DELETE_PLACE } from "../../../api/routes";
+import axios from "../../../api/axios";
+import Cancellation from "axios";
+
 import "./index.css";
 
 const PlaceItem = props => {
   const auth = useContext(AuthContext);
+  const CancelToken = Cancellation.CancelToken;
+  const source = CancelToken.source();
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -28,13 +38,31 @@ const PlaceItem = props => {
     setShowConfirmModal(false);
   };
 
-  const confirmDeleteHandler = () => {
+  const confirmDeleteHandler = async () => {
     setShowConfirmModal(false);
-    console.log("Deleting...");
+    setIsLoading(true);
+
+    try {
+      await axios.delete(DELETE_PLACE + props.id, {
+        cancelToken: source.token
+      });
+      props.onDelete(props.id);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message || props.t("Error message"));
+      setIsLoading(false);
+      source.cancel("Operation canceled by the user.");
+      throw err;
+    }
+  };
+
+  const errorHandler = () => {
+    setError(null);
   };
 
   return (
     <>
+      <ErrorModal error={error} onClear={errorHandler} />
       <Modal
         show={showMap}
         onCancel={closeMapHandler}
@@ -67,6 +95,7 @@ const PlaceItem = props => {
       </Modal>
       <li className="place-item">
         <Card className="place-item__content">
+          {isLoading && <Spinner asOverlay />}
           <div className="place-item__image">
             <img src={props.image} alt={props.title} />
           </div>

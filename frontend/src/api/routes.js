@@ -24,6 +24,8 @@ export const POST_LOG_IN = "/users/login";
 
 export const PATCH_PLACE = "/places/";
 
+export const DELETE_PLACE = "/places/";
+
 // Identifiers for validators
 export const VALIDATOR_TYPE_REQUIRE = "REQUIRE";
 export const VALIDATOR_TYPE_MINLENGTH = "MINLENGTH";
