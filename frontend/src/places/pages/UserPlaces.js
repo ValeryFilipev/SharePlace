@@ -1,61 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-// import axios from "../../api/axios";
-// import { GET_PLACES_USER } from "../../api/routes";
-// import Cancellation from "axios";
-import { useHttpClient } from "../../hooks/http-hook";
+import { withNamespaces } from "react-i18next";
+import axios from "../../api/axios";
+import { GET_PLACES_USER } from "../../api/routes";
+import Cancellation from "axios";
 
 import PlaceList from "../components/PlaceList";
 import ErrorModal from "../../components/UI/Error";
 import Spinner from "../../components/UI/Spinner";
 
-const UserPlaces = () => {
-  // const CancelToken = Cancellation.CancelToken;
-  // const source = CancelToken.source();
+const UserPlaces = ({ t }) => {
+  const CancelToken = Cancellation.CancelToken;
+  const source = CancelToken.source();
 
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(undefined);
   const [loadedPlaces, setLoadedPlaces] = useState(undefined);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const userId = useParams().userId;
 
-  // useEffect(() => {
-  //   const fetchPlaces = async () => {
-  //     setIsLoading(true);
-  //
-  //     try {
-  //       const response = await axios.get(GET_PLACES_USER + userId, {
-  //         cancelToken: source.token
-  //       });
-  //
-  //       setLoadedPlaces(response.data.places);
-  //     } catch (err) {
-  //       setError(err.message);
-  //       source.cancel("Operation canceled by the user.");
-  //       throw err;
-  //     }
-  //     setIsLoading(false);
-  //   };
-  //   fetchPlaces();
-  //   // eslint-disable-next-line
-  // }, [userId]);
-
   useEffect(() => {
     const fetchPlaces = async () => {
+      setIsLoading(true);
+
       try {
-        const responseData = await sendRequest(
-          `http://localhost:5000/api/places/user/${userId}`
-        );
-        setLoadedPlaces(responseData.places);
-      } catch (err) {}
+        const response = await axios.get(GET_PLACES_USER + userId, {
+          cancelToken: source.token
+        });
+
+        setLoadedPlaces(response.data.places);
+      } catch (err) {
+        setError(t("Error modal body"));
+        source.cancel("Operation canceled by the user.");
+        throw err.message;
+      }
+      setIsLoading(false);
     };
     fetchPlaces();
-  }, [sendRequest, userId]);
+    // eslint-disable-next-line
+  }, [userId]);
 
-  // const errorHandler = () => {
-  //   setError(null);
-  // };
+  const errorHandler = () => {
+    setError(null);
+  };
 
   const placeDeleteHandler = deletedPlaceId => {
     setLoadedPlaces(prevPlaces =>
@@ -65,8 +52,7 @@ const UserPlaces = () => {
 
   return (
     <>
-      {/*<ErrorModal error={error} onClear={errorHandler} />*/}
-      <ErrorModal error={error} onClear={clearError} />
+      <ErrorModal error={error} onClear={errorHandler} />
       {isLoading && (
         <div className="center">
           <Spinner />
@@ -79,4 +65,4 @@ const UserPlaces = () => {
   );
 };
 
-export default UserPlaces;
+export default withNamespaces()(UserPlaces);

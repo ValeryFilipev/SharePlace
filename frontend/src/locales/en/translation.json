@@ -40,5 +40,6 @@
   "Places": "Places",
   "Error message": "Something went wrong, please try again!",
   "Okay": "Okay",
-  "Error modal header": "An error occurred!"
+  "Error modal header": "An error occurred!",
+  "Error modal body": "Could not find a places for the provided user id."
 }
