@@ -7,6 +7,7 @@ import Input from "../../../components/UI/Form/Input";
 import Button from "../../../components/UI/Form/Button";
 import Spinner from "../../../components/UI/Spinner";
 import ErrorModal from "../../../components/UI/Error";
+import ImageUpload from "../../../components/UI/Form/ImageUpload";
 
 import {
   VALIDATOR_EMAIL,
@@ -134,6 +135,7 @@ const Auth = ({ t }) => {
               onInput={inputHandler}
             />
           )}
+          {!isLoginMode && <ImageUpload id="image" center />}
           <Input
             element="input"
             id="email"
