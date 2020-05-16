@@ -99,10 +99,14 @@ const Auth = ({ t }) => {
       }
     } else {
       try {
+        const formData = new FormData();
+        formData.append("name", formState.inputs.name.value);
+        formData.append("email", formState.inputs.email.value);
+        formData.append("password", formState.inputs.password.value);
+        formData.append("image", formState.inputs.image.value);
+
         const response = await axios.post(POST_SIGN_UP, {
-          name: formState.inputs.name.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value
+          formData
         }, {
           cancelToken: source.token
         });
