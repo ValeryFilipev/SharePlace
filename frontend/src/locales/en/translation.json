@@ -43,5 +43,6 @@
   "Error modal header": "An error occurred!",
   "Error modal body": "Could not find a places for the provided user id.",
   "Pick Image": "Pick Image",
-  "Pick warning": "Please pick the image."
+  "Pick warning": "Please pick the image.",
+  "Error image": "Пожалуйста, выберите изображение."
 }

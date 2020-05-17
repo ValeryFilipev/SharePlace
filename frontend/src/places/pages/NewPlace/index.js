@@ -7,14 +7,14 @@ import Input from "../../../components/UI/Form/Input";
 import Button from "../../../components/UI/Form/Button";
 import ErrorModal from "../../../components/UI/Error";
 import Spinner from "../../../components/UI/Spinner";
+import ImageUpload from "../../../components/UI/Form/ImageUpload";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
 } from "../../../util/validators";
 import { useForm } from "../../../hooks/form-hook";
 import { AuthContext } from "../../../context/auth-context";
-import axios from "../../../api/axios";
-import { ROOT, POST_PLACES } from "../../../api/routes";
+import { ROOT } from "../../../api/routes";
 import Cancellation from "axios";
 
 import "./index.css";
@@ -41,6 +41,10 @@ const NewPlace = ({ t }) => {
       address: {
         value: "",
         isValid: false
+      },
+      image: {
+        value: null,
+        isValid: false
       }
     },
     false
@@ -52,14 +56,20 @@ const NewPlace = ({ t }) => {
     setIsLoading(true);
 
     try {
-      await axios.post(POST_PLACES, {
-        title: formState.inputs.title.value,
-        description: formState.inputs.description.value,
-        address: formState.inputs.address.value,
-        creator: auth.userId
-      }, {
-        cancelToken: source.token
+      const formData = new FormData();
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("creator", auth.userId);
+      formData.append("image", formState.inputs.image.value);
+
+      await Cancellation({
+        method: "post",
+        url: "http://localhost:5000/api/places",
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" }
       });
+
       setIsLoading(false);
       history.push(ROOT);
     } catch (err) {
@@ -104,6 +114,7 @@ const NewPlace = ({ t }) => {
           errorText={t("Error text address")}
           onInput={inputHandler}
         />
+        <ImageUpload id="image" onInput={inputHandler} errorText={t("Error image")} />
         <Button type="submit" disabled={!formState.isValid}>
           {t("Add Place")}
         </Button>

@@ -43,5 +43,6 @@
   "Error modal header": "Произошла ошибка!",
   "Error modal body": "Невозможно отобразить места данного пользователя.",
   "Pick Image": "Выбрать изображение",
-  "Pick warning": "Пожалуйста, выберите изображение."
+  "Pick warning": "Пожалуйста, выберите изображение.",
+  "Error image": "Please provide an image."
 }
