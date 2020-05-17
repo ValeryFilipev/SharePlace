@@ -16,7 +16,6 @@ import {
 } from "../../../util/validators";
 import { POST_LOG_IN } from "../../../api/routes";
 import { useForm } from "../../../hooks/form-hook";
-import { useHttpClient } from "../../../hooks/http-hook";
 import { AuthContext } from "../../../context/auth-context";
 import axios from "../../../api/axios";
 import Cancellation from "axios";
@@ -32,8 +31,6 @@ const Auth = ({ t }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
-
-  const { sendRequest } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -108,14 +105,15 @@ const Auth = ({ t }) => {
         formData.append("password", formState.inputs.password.value);
         formData.append("image", formState.inputs.image.value);
 
-        const response = await sendRequest(
-          'http://localhost:5000/api/users/signup',
-          'POST',
-          formData
-        );
+        const response = await Cancellation({
+          method: "post",
+          url: "http://localhost:5000/api/users/signup",
+          data: formData,
+          headers: { "Content-Type": "multipart/form-data" }
+        });
 
         setIsLoading(false);
-        auth.login(response.user.id);
+        auth.login(response.data.user.id);
       } catch (err) {
         setError(err.message || t("Error message"));
         setIsLoading(false);
