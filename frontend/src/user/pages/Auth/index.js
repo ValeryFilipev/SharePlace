@@ -14,8 +14,9 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
 } from "../../../util/validators";
-import { POST_LOG_IN, POST_SIGN_UP } from "../../../api/routes";
+import { POST_LOG_IN } from "../../../api/routes";
 import { useForm } from "../../../hooks/form-hook";
+import { useHttpClient } from "../../../hooks/http-hook";
 import { AuthContext } from "../../../context/auth-context";
 import axios from "../../../api/axios";
 import Cancellation from "axios";
@@ -31,6 +32,8 @@ const Auth = ({ t }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
+
+  const { sendRequest } = useHttpClient();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -105,18 +108,17 @@ const Auth = ({ t }) => {
         formData.append("password", formState.inputs.password.value);
         formData.append("image", formState.inputs.image.value);
 
-        const response = await axios.post(POST_SIGN_UP, {
+        const response = await sendRequest(
+          'http://localhost:5000/api/users/signup',
+          'POST',
           formData
-        }, {
-          cancelToken: source.token
-        });
+        );
+
         setIsLoading(false);
-        auth.login(response.data.user.id);
+        auth.login(response.user.id);
       } catch (err) {
-        setIsLoading(false);
         setError(err.message || t("Error message"));
-        source.cancel("Operation canceled by the user.");
-        throw err;
+        setIsLoading(false);
       }
     }
   };
