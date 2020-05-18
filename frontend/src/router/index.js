@@ -1,5 +1,5 @@
 //test!!!
-import React, { useState, useCallback, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,60 +14,10 @@ import UpdatePlace from "../places/pages/UpdatePlace";
 import Auth from "../user/pages/Auth";
 import MainNavigation from "../components/Navigation/MainNavigation";
 import { AuthContext } from "../context/auth-context";
-
-let logoutTimer;
+import { useAuth } from "../hooks/auth-hook";
 
 const AppRouter = () => {
-  const [token, setToken] = useState(false);
-  const [userId, setUserId] = useState(false);
-  const [tokenExpirationDate, setTokenExpirationDate] = useState(undefined);
-
-  const login = useCallback((uid, token, expirationDate) => {
-    setToken(token);
-    setUserId(uid);
-
-    const tokenExpirationTime =
-      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-    setTokenExpirationDate(tokenExpirationDate);
-
-    localStorage.setItem(
-      "userData",
-      JSON.stringify({
-        userId: uid,
-        token,
-        expiration: tokenExpirationTime.toISOString()
-      })
-    );
-    // eslint-disable-next-line
-  }, []);
-
-  const logout = useCallback(() => {
-    setToken(null);
-    setTokenExpirationDate(null);
-    setUserId(null);
-    localStorage.removeItem("userData");
-  }, []);
-
-  useEffect(() => {
-    if (token && tokenExpirationDate) {
-      const remainingTime = tokenExpirationDate.getTime() - new Date().getTime();
-      logoutTimer = setTimeout(logout, remainingTime);
-    } else {
-      clearTimeout(logoutTimer);
-    }
-  }, [token, logout, tokenExpirationDate]);
-
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("userData"));
-
-    if (
-      storedData &&
-      storedData.token &&
-      new Date(storedData.expiration) > new Date()
-    ) {
-      login(storedData.userId, storedData.token, new Date(storedData.expiration));
-    }
-  }, [login]);
+  const { token, login, logout, userId } = useAuth();
 
   let routes;
   if (token) {
