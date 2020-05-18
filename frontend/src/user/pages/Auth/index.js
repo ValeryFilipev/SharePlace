@@ -90,7 +90,7 @@ const Auth = ({ t }) => {
           cancelToken: source.token
         });
         setIsLoading(false);
-        auth.login(response.data.user.id);
+        auth.login(response.data.userId, response.data.token);
       } catch (err) {
         setError(err.message || t("Error message"));
         setIsLoading(false);
@@ -113,7 +113,7 @@ const Auth = ({ t }) => {
         });
 
         setIsLoading(false);
-        auth.login(response.data.user.id);
+        auth.login(response.data.userId, response.data.token);
       } catch (err) {
         setError(err.message || t("Error message"));
         setIsLoading(false);

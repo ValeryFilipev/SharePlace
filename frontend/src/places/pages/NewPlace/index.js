@@ -67,7 +67,10 @@ const NewPlace = ({ t }) => {
         method: "post",
         url: "http://localhost:5000/api/places",
         data: formData,
-        headers: { "Content-Type": "multipart/form-data" }
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + auth.token
+        }
       });
 
       setIsLoading(false);
