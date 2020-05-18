@@ -91,6 +91,9 @@ const UpdatePlace = ({ t }) => {
         title: formState.inputs.title.value,
         description: formState.inputs.description.value
       }, {
+        headers: {
+          Authorization: "Bearer " + auth.token
+        },
         cancelToken: source.token
       });
       setIsLoading(false);

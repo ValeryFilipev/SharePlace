@@ -44,6 +44,9 @@ const PlaceItem = props => {
 
     try {
       await axios.delete(DELETE_PLACE + props.id, {
+        headers: {
+          Authorization: "Bearer " + auth.token
+        },
         cancelToken: source.token
       });
       props.onDelete(props.id);
