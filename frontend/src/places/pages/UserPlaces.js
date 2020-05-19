@@ -8,6 +8,7 @@ import Cancellation from "axios";
 import PlaceList from "../components/PlaceList";
 import ErrorModal from "../../components/UI/Error";
 import Spinner from "../../components/UI/Spinner";
+import { VerticleButton as ScrollUpButton } from "react-scroll-up-button";
 
 const UserPlaces = ({ t }) => {
   const CancelToken = Cancellation.CancelToken;
@@ -52,6 +53,7 @@ const UserPlaces = ({ t }) => {
 
   return (
     <>
+      <ScrollUpButton />
       <ErrorModal error={error} onClear={errorHandler} />
       {isLoading && (
         <div className="center">

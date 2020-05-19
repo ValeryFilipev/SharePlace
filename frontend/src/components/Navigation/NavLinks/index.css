@@ -48,7 +48,7 @@
   color: white;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 900px) {
   .nav-links {
     flex-direction: row;
   }
