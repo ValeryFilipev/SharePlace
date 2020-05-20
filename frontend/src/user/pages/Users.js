@@ -6,7 +6,7 @@ import { GET_USERS } from "../../api/routes";
 import UsersList from "../components/UserList";
 import ErrorModal from "../../components/UI/Error";
 import Spinner from "../../components/UI/Spinner";
-import { VerticleButton as ScrollUpButton } from "react-scroll-up-button";
+import { TinyButton as ScrollUpButton } from "react-scroll-up-button";
 
 const Users = () => {
   const CancelToken = Cancellation.CancelToken;

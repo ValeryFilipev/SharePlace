@@ -13,6 +13,7 @@ import UserPlaces from "../places/pages/UserPlaces";
 import UpdatePlace from "../places/pages/UpdatePlace";
 import Auth from "../user/pages/Auth";
 import MainNavigation from "../components/Navigation/MainNavigation";
+import Footer from "../components/Footer";
 import { AuthContext } from "../context/auth-context";
 import { useAuth } from "../hooks/auth-hook";
 
@@ -60,6 +61,7 @@ const AppRouter = () => {
       <Router>
         <MainNavigation />
         <main>{routes}</main>
+        <Footer />
       </Router>
     </AuthContext.Provider>
   );
