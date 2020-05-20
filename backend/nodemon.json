@@ -2,6 +2,8 @@
   "env": {
     "MONGO_USER": "valery",
     "MONGO_PASSWORD": "pTUu9NhhK7CyTqGB",
-    "MONGO_DB": "places-react-dev"
+    "MONGO_DB": "places-react-dev",
+    "GOOGLE_API_KEY": "AIzaSyBZXrQabQrcivRH3-sJvovEVhGHb7VUm6U",
+    "JWT_KEY": "supersecret_dont_share"
   }
 }

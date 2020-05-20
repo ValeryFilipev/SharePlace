@@ -64,7 +64,7 @@ const NewPlace = ({ t }) => {
 
       await Cancellation({
         method: "post",
-        url: "http://localhost:5000/api/places",
+        url: `${process.env.REACT_APP_ASSET_URL}/api/places`,
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",

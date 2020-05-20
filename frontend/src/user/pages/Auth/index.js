@@ -107,7 +107,7 @@ const Auth = ({ t }) => {
 
         const response = await Cancellation({
           method: "post",
-          url: "http://localhost:5000/api/users/signup",
+          url: `${process.env.REACT_APP_ASSET_URL}/api/users/signup`,
           data: formData,
           headers: { "Content-Type": "multipart/form-data" }
         });
