@@ -1,4 +1,3 @@
-// test
 import { useCallback, useEffect, useState } from "react";
 
 let logoutTimer;
